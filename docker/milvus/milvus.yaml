@@ -1,0 +1,43 @@
+# Default configuration file for Milvus Standalone
+
+log:
+  level: info
+
+dataNode:
+  diskQuota:
+    enabled: true
+    max: 85899345920  # 80GB
+  syncDiskInterval: 1
+  insertSegmentBufSize: 16777216
+  autoFlush: true
+
+indexNode:
+  buildSegmentTimeout: 3600
+  maxReplicaNumber: 8
+  enableDiskIndex: true
+
+queryNode:
+  searchStream: false
+  cacheSize: 10737418240  # 10GB
+  queryStreamTimeout: 300
+  easyDeleteMaxTimeRatio: 0.05
+
+proxy:
+  maxNameLen: 255
+  innerMsgMaxBufSize: 67108864
+  maxFieldDataLen: 1000
+  maxVectorDimension: 65535
+
+rootCoord:
+  maxPartitionNum: 4096
+  minSegmentSizeToEnableIndex: 1024
+
+dataCoord:
+  gc:
+    missingTolerance: 86400
+
+queryCoord:
+  autoBalance: true
+
+indexCoord:
+  minSegmentNumToBuildIndex: 2

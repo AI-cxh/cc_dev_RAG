@@ -1,0 +1,68 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom styles */
+@layer components {
+  .markdown-content {
+    @apply prose prose-slate max-w-none;
+  }
+
+  .markdown-content pre {
+    @apply bg-slate-900 text-slate-100 rounded-lg p-4 overflow-x-auto;
+  }
+
+  .markdown-content code {
+    @apply text-sm font-mono;
+  }
+
+  .markdown-content p code {
+    @apply bg-slate-100 text-slate-700 px-1.5 py-0.5 rounded;
+  }
+
+  .chat-message-user {
+    @apply bg-primary-600 text-white rounded-2xl rounded-br-md p-4 max-w-[80%];
+  }
+
+  .chat-message-assistant {
+    @apply bg-slate-100 text-slate-900 rounded-2xl rounded-bl-md p-4 max-w-[80%];
+  }
+
+  .reference-chip {
+    @apply inline-block bg-primary-100 text-primary-700 px-2 py-1 rounded-md text-xs font-medium cursor-pointer hover:bg-primary-200 transition;
+  }
+}
+
+/* Scrollbar styles */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-slate-100;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-300 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-slate-400;
+}
+
+/* Loading animation */
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.8);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.3);
+    opacity: 0;
+  }
+}
+
+.pulse-ring {
+  animation: pulse-ring 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
