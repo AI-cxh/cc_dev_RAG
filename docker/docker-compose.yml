@@ -9,7 +9,7 @@ services:
       - ETCD_SNAPSHOT_COUNT=50000
     volumes:
       - ./data/etcd:/etcd
-    command: etcd -advertise-client-urls=http://127.0.0.1:2379 -listen-client-urls http://0.0.0.0:2379 --data-dir /etcd
+    command: etcd -advertise-client-urls=http://127.0.0.1:2379 -listen-client-urls http://0.0.0.0:2379 --data-dir /etcd  
     networks:
       - cc-rag-network
     healthcheck:
@@ -46,8 +46,8 @@ services:
       - ./milvus/milvus.yaml:/milvus/configs/milvus.yaml
       - ./data/milvus:/var/lib/milvus
     ports:
-      - "19530:19530"
-      - "19091:9091"  # 避免端口冲突
+      - "19532:19530"  # 修改为 19532
+      - "19093:9091"   # 修改为 19093
     depends_on:
       - etcd
       - minio
@@ -66,7 +66,7 @@ services:
     environment:
       MILVUS_URL: milvus:19530
     ports:
-      - "3000:3000"
+      - "13002:3000"  # 修改为 13002
     depends_on:
       - milvus
     networks:

@@ -45,7 +45,7 @@ class Settings(BaseSettings):
 
     # Milvus
     milvus_host: str = Field(default="localhost", alias="MILVUS_HOST")
-    milvus_port: int = Field(default=19530, alias="MILVUS_PORT")
+    milvus_port: int = Field(default=19532, alias="MILVUS_PORT")
     milvus_token: str = Field(default="root:Milvus", alias="MILVUS_TOKEN")
 
     # Database
