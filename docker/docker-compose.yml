@@ -1,9 +1,7 @@
-version: '3.8'
-
 services:
   etcd:
     image: quay.io/coreos/etcd:v3.5.5
-    container_name: milvus-etcd
+    container_name: cc-rag-etcd
     environment:
       - ETCD_AUTO_COMPACTION_MODE=revision
       - ETCD_AUTO_COMPACTION_RETENTION=1000
@@ -13,7 +11,7 @@ services:
       - ./data/etcd:/etcd
     command: etcd -advertise-client-urls=http://127.0.0.1:2379 -listen-client-urls http://0.0.0.0:2379 --data-dir /etcd
     networks:
-      - milvus-network
+      - cc-rag-network
     healthcheck:
       test: ["CMD", "etcdctl", "endpoint", "health"]
       interval: 10s
@@ -22,7 +20,7 @@ services:
 
   minio:
     image: minio/minio:RELEASE.2023-03-20T20-16-18Z
-    container_name: milvus-minio
+    container_name: cc-rag-minio
     environment:
       MINIO_ACCESS_KEY: minioadmin
       MINIO_SECRET_KEY: minioadmin
@@ -35,11 +33,11 @@ services:
       timeout: 20s
       retries: 3
     networks:
-      - milvus-network
+      - cc-rag-network
 
   milvus:
     image: milvusdb/milvus:v2.4.0
-    container_name: milvus-standalone
+    container_name: cc-rag-milvus
     command: ["milvus", "run", "standalone"]
     environment:
       ETCD_ENDPOINTS: etcd:2379
@@ -54,7 +52,7 @@ services:
       - etcd
       - minio
     networks:
-      - milvus-network
+      - cc-rag-network
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9091/healthz"]
       interval: 30s
@@ -64,7 +62,7 @@ services:
 
   attu:
     image: zilliz/attu:v2.4.0
-    container_name: milvus-attu
+    container_name: cc-rag-attu
     environment:
       MILVUS_URL: milvus:19530
     ports:
@@ -72,8 +70,8 @@ services:
     depends_on:
       - milvus
     networks:
-      - milvus-network
+      - cc-rag-network
 
 networks:
-  milvus-network:
+  cc-rag-network:
     driver: bridge
